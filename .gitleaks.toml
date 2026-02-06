@@ -1,0 +1,74 @@
+# Gitleaks configuration for litellm-rs
+# Focus: AI provider API keys, OAuth tokens
+#
+# Run locally: gitleaks detect --config .gitleaks.toml
+
+title = "litellm-rs gitleaks config"
+
+# -- AI Provider API Keys --
+
+[[rules]]
+id = "openai-api-key"
+description = "OpenAI API Key (project/service/admin)"
+regex = '''(?i)\b(sk-(?:proj-|svcacct-|admin-)[A-Za-z0-9_-]{20,})\b'''
+keywords = ["sk-proj-", "sk-svcacct-", "sk-admin-"]
+tags = ["ai", "openai"]
+
+[[rules]]
+id = "openai-api-key-legacy"
+description = "OpenAI API Key (legacy sk- format with T3BlbkFJ marker)"
+regex = '''\b(sk-[A-Za-z0-9]{20,}T3BlbkFJ[A-Za-z0-9]{20,})\b'''
+keywords = ["T3BlbkFJ"]
+tags = ["ai", "openai"]
+
+[[rules]]
+id = "anthropic-api-key"
+description = "Anthropic API Key"
+regex = '''\b(sk-ant-(?:api03|admin)-[A-Za-z0-9_-]{20,})\b'''
+keywords = ["sk-ant-"]
+tags = ["ai", "anthropic"]
+
+[[rules]]
+id = "gemini-api-key"
+description = "Google Gemini / AI Studio API Key"
+regex = '''\b(AIzaSy[A-Za-z0-9_-]{33,})\b'''
+keywords = ["AIzaSy"]
+tags = ["ai", "google", "gemini"]
+
+[[rules]]
+id = "openrouter-api-key"
+description = "OpenRouter API Key"
+regex = '''\b(sk-or-v1-[A-Za-z0-9]{20,})\b'''
+keywords = ["sk-or-"]
+tags = ["ai", "openrouter"]
+
+[[rules]]
+id = "xai-api-key"
+description = "xAI / Grok API Key"
+regex = '''\b(xai-[A-Za-z0-9_-]{20,})\b'''
+keywords = ["xai-"]
+tags = ["ai", "xai"]
+
+# -- OAuth / Session Tokens --
+
+[[rules]]
+id = "bearer-token-hardcoded"
+description = "Hardcoded bearer token in source"
+regex = '''(?i)(?:bearer|authorization)['":\s]+([A-Za-z0-9_-]{40,})'''
+keywords = ["bearer", "authorization"]
+tags = ["oauth", "token"]
+entropy = 3.5
+
+# -- Global Allowlist --
+
+[allowlist]
+description = "Files that reference key names but never contain real values"
+paths = [
+    '''\.lock$''',
+    '''Cargo\.lock$''',
+    '''target/''',
+    '''\.git/''',
+    '''README\.md$''',
+    '''CONTRIBUTING\.md$''',
+    '''\.example\.''',
+]
