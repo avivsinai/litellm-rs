@@ -3,18 +3,33 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
-
-permissions:
-  contents: write
+      - "v[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
   ci:
+    permissions:
+      contents: read
+      pull-requests: read
     uses: ./.github/workflows/ci.yml
+
+  check-version:
+    name: Verify tag matches crate version
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check tag vs Cargo.toml version
+        run: |
+          CRATE_VERSION="v$(cargo metadata --format-version=1 --no-deps \
+            | jq -r '.packages[0].version')"
+          if [ "$CRATE_VERSION" != "${{ github.ref_name }}" ]; then
+            echo "::error::Tag ${{ github.ref_name }} does not match Cargo.toml version $CRATE_VERSION"
+            exit 1
+          fi
 
   publish:
     name: Publish to crates.io
-    needs: ci
+    needs: check-version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +43,8 @@ jobs:
     name: GitHub Release
     needs: publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: softprops/action-gh-release@v2
