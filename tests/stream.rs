@@ -1,6 +1,6 @@
 use bytes::Bytes;
 use futures_util::StreamExt;
-use litellm_rs::stream::{parse_anthropic_sse_stream, parse_sse_stream};
+use litellm_rust::stream::{parse_anthropic_sse_stream, parse_sse_stream};
 
 #[tokio::test]
 async fn parse_sse_basic() {

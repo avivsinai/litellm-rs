@@ -6,9 +6,9 @@
 //! - Error handling for various HTTP status codes
 //! - Configuration validation
 
-use litellm_rs::config::ProviderConfig;
-use litellm_rs::providers::{anthropic, gemini, openai_compat};
-use litellm_rs::types::{ChatMessage, ChatMessageContent, ChatRequest};
+use litellm_rust::config::ProviderConfig;
+use litellm_rust::providers::{anthropic, gemini, openai_compat};
+use litellm_rust::types::{ChatMessage, ChatMessageContent, ChatRequest};
 use reqwest::Client;
 use serde_json::json;
 use wiremock::matchers::{header, method, path};
@@ -653,7 +653,7 @@ mod anthropic_tests {
 
 mod embedding_tests {
     use super::*;
-    use litellm_rs::types::EmbeddingRequest;
+    use litellm_rust::types::EmbeddingRequest;
 
     /// Verifies embeddings are extracted correctly from response.
     #[tokio::test]
@@ -735,7 +735,7 @@ mod embedding_tests {
 
 mod image_generation_tests {
     use super::*;
-    use litellm_rs::types::ImageRequest;
+    use litellm_rust::types::ImageRequest;
 
     /// Verifies image generation extracts URLs and revised prompts.
     #[tokio::test]
@@ -832,7 +832,7 @@ mod image_generation_tests {
 
 mod gemini_image_generation_tests {
     use super::*;
-    use litellm_rs::types::ImageRequest;
+    use litellm_rust::types::ImageRequest;
 
     /// Verifies Gemini native image generation uses generateContent with response_modalities
     /// and extracts base64 from candidates[].content.parts[].inlineData.data
@@ -947,7 +947,7 @@ mod gemini_image_generation_tests {
 
 mod gemini_image_editing_tests {
     use super::*;
-    use litellm_rs::types::{ImageEditRequest, ImageInputData};
+    use litellm_rust::types::{ImageEditRequest, ImageInputData};
     use wiremock::matchers::body_json;
 
     /// Verifies image editing with base64 input sends correct request body
@@ -1227,8 +1227,8 @@ mod gemini_image_editing_tests {
 
 mod video_generation_tests {
     use super::*;
-    use litellm_rs::providers::openai_compat::VideoGenerationOptions;
-    use litellm_rs::types::VideoRequest;
+    use litellm_rust::providers::openai_compat::VideoGenerationOptions;
+    use litellm_rust::types::VideoRequest;
     use std::sync::atomic::{AtomicU32, Ordering};
     use std::sync::Arc;
 

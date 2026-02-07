@@ -41,7 +41,7 @@ litellm-rust = { git = "https://github.com/avivsinai/litellm-rust" }
 ## Quick Start
 
 ```rust
-use litellm_rs::{
+use litellm_rust::{
     LiteLLM, ProviderConfig, ProviderKind,
     ChatRequest, EmbeddingRequest, ImageRequest, VideoRequest,
 };
@@ -105,7 +105,7 @@ async fn main() -> anyhow::Result<()> {
 
 ```rust
 use futures_util::StreamExt;
-use litellm_rs::{LiteLLM, ChatRequest};
+use litellm_rust::{LiteLLM, ChatRequest};
 
 # async fn run() -> anyhow::Result<()> {
 let client = LiteLLM::new()?;

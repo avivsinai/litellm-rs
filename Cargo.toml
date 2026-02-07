@@ -14,7 +14,7 @@ authors = ["Aviv Sinai"]
 exclude = ["/tests", "/.github", "/.gitleaks.toml", "/CLAUDE.md", "/AGENTS.md"]
 
 [lib]
-name = "litellm_rs"
+name = "litellm_rust"
 
 [dependencies]
 anyhow = "1.0"

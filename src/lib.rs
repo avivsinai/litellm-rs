@@ -8,9 +8,9 @@
 //! # Quick Start
 //!
 //! ```rust,no_run
-//! use litellm_rs::{LiteLLM, ChatRequest};
+//! use litellm_rust::{LiteLLM, ChatRequest};
 //!
-//! # async fn run() -> litellm_rs::Result<()> {
+//! # async fn run() -> litellm_rust::Result<()> {
 //! let client = LiteLLM::new()?;
 //! let resp = client
 //!     .completion(ChatRequest::new("openai/gpt-4o").message("user", "hello"))
@@ -24,9 +24,9 @@
 //!
 //! ```rust,no_run
 //! use futures_util::StreamExt;
-//! use litellm_rs::{LiteLLM, ChatRequest};
+//! use litellm_rust::{LiteLLM, ChatRequest};
 //!
-//! # async fn run() -> litellm_rs::Result<()> {
+//! # async fn run() -> litellm_rust::Result<()> {
 //! let client = LiteLLM::new()?;
 //! let mut stream = client
 //!     .stream_completion(ChatRequest::new("openai/gpt-4o").message("user", "hello"))
